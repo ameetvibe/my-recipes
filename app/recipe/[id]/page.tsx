@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation"
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+import { createServerSupabaseClient } from "@/lib/supabase-server"
 import { RecipeDetail } from "@/components/recipe-detail"
 
 interface RecipePageProps {
@@ -10,8 +9,8 @@ interface RecipePageProps {
 }
 
 export default async function RecipePage({ params }: RecipePageProps) {
-  const cookieStore = await cookies()
-  const supabase = createServerComponentClient({ cookies: () => cookieStore })
+  
+  const supabase = await createServerSupabaseClient()
   const resolvedParams = await params
   
   const { data: recipe, error } = await supabase
@@ -32,8 +31,8 @@ export default async function RecipePage({ params }: RecipePageProps) {
 }
 
 export async function generateMetadata({ params }: RecipePageProps) {
-  const cookieStore = await cookies()
-  const supabase = createServerComponentClient({ cookies: () => cookieStore })
+  
+  const supabase = await createServerSupabaseClient()
   const resolvedParams = await params
   
   const { data: recipe } = await supabase

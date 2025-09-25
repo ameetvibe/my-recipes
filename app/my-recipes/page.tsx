@@ -1,11 +1,10 @@
 import { redirect } from "next/navigation"
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+import { createServerSupabaseClient } from "@/lib/supabase-server"
 import { MyRecipesList } from "@/components/my-recipes-list"
 
 export default async function MyRecipesPage() {
-  const cookieStore = await cookies()
-  const supabase = createServerComponentClient({ cookies: () => cookieStore })
+  
+  const supabase = await createServerSupabaseClient()
 
   // Get current user
   const { data: { user } } = await supabase.auth.getUser()

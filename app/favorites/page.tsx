@@ -1,6 +1,5 @@
 import { redirect } from 'next/navigation'
-import { cookies } from 'next/headers'
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { FavoriteRecipes } from '@/components/favorite-recipes'
 
 export const metadata = {
@@ -9,8 +8,7 @@ export const metadata = {
 }
 
 export default async function FavoritesPage() {
-  const cookieStore = await cookies()
-  const supabase = createServerComponentClient({ cookies: () => cookieStore })
+  const supabase = await createServerSupabaseClient()
 
   const {
     data: { session },

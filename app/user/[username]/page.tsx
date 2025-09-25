@@ -1,7 +1,6 @@
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+import { createServerSupabaseClient } from "@/lib/supabase-server"
 import { UserProfile } from "@/components/user-profile"
 
 interface UserProfilePageProps {
@@ -11,8 +10,8 @@ interface UserProfilePageProps {
 }
 
 export async function generateMetadata({ params }: UserProfilePageProps): Promise<Metadata> {
-  const cookieStore = await cookies()
-  const supabase = createServerComponentClient({ cookies: () => cookieStore })
+  
+  const supabase = await createServerSupabaseClient()
   const resolvedParams = await params
   
   const { data: users } = await supabase
@@ -42,8 +41,8 @@ export async function generateMetadata({ params }: UserProfilePageProps): Promis
 }
 
 export default async function UserProfilePage({ params }: UserProfilePageProps) {
-  const cookieStore = await cookies()
-  const supabase = createServerComponentClient({ cookies: () => cookieStore })
+  
+  const supabase = await createServerSupabaseClient()
   const resolvedParams = await params
   
   // Get current user to determine if this is their own profile

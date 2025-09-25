@@ -1,6 +1,5 @@
 import { redirect } from 'next/navigation'
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
+import { createServerSupabaseClient } from "@/lib/supabase-server"
 import { EditRecipeForm } from "@/components/edit-recipe-form"
 import type { Database } from '@/lib/supabase'
 
@@ -10,11 +9,9 @@ interface EditRecipePageProps {
 
 export default async function EditRecipePage({ params }: EditRecipePageProps) {
   const { id } = await params
-  const cookieStore = await cookies()
+  
 
-  const supabase = createServerComponentClient<Database>({
-    cookies: () => cookieStore
-  })
+  const supabase = await createServerSupabaseClient()
 
   const { data: { user } } = await supabase.auth.getUser()
 

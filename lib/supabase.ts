@@ -1,7 +1,11 @@
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createBrowserClient } from '@supabase/ssr'
 
 // Client-side Supabase client (for use in client components)
-export const createClient = () => createClientComponentClient<Database>()
+export const createClient = () =>
+  createBrowserClient<Database>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  )
 
 // Database types (will be generated after running the schema)
 export type Database = {
