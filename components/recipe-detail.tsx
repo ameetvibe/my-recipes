@@ -63,13 +63,14 @@ export function RecipeDetail({ recipe }: RecipeDetailProps) {
   const [isLoading, setIsLoading] = useState(true)
   const [user, setUser] = useState<any>(null)
   const [likeCount, setLikeCount] = useState(0)
-  const supabase = createClient()
+  const supabase = createClient() // Keep this here for other functions
 
   const totalTime = (recipe.prep_time_minutes || 0) + (recipe.cook_time_minutes || 0)
 
   useEffect(() => {
     async function fetchRatingAndComments() {
       try {
+        const supabase = createClient()
         // Fetch average rating
         const { data: ratings } = await supabase
           .from('ratings')
@@ -90,7 +91,14 @@ export function RecipeDetail({ recipe }: RecipeDetailProps) {
         setLikeCount(likeCountData || 0)
 
         // Fetch user's rating and favorite status if logged in
-        const { data: { user } } = await supabase.auth.getUser()
+        console.log('Fetching user data...')
+        const { data: { user }, error: userError } = await supabase.auth.getUser()
+        console.log('User data:', { user, userError })
+
+        if (userError) {
+          console.error('Error fetching user:', userError)
+        }
+
         if (user) {
           setUser(user)
 
@@ -175,6 +183,8 @@ export function RecipeDetail({ recipe }: RecipeDetailProps) {
   }
 
   const handleLikeToggle = async () => {
+    console.log('Like toggle clicked, user:', user)
+
     if (!user) {
       toast.error("Please sign in to like recipes")
       return
