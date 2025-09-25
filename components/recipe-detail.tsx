@@ -102,25 +102,27 @@ export function RecipeDetail({ recipe }: RecipeDetailProps) {
         if (user) {
           setUser(user)
 
-          const { data: userRatingData } = await supabase
+          const { data: userRatingData, error: ratingError } = await supabase
             .from('ratings')
             .select('rating')
             .eq('user_id', user.id)
             .eq('recipe_id', recipe.id)
-            .single()
+            .maybeSingle() // Use maybeSingle instead of single
 
+          console.log('Rating check result:', { userRatingData, ratingError })
           if (userRatingData) {
             setUserRating(userRatingData.rating)
           }
 
           // Check if user has liked this recipe
-          const { data: likeData } = await supabase
+          const { data: likeData, error: likeError } = await supabase
             .from('recipe_likes')
             .select('id')
             .eq('user_id', user.id)
             .eq('recipe_id', recipe.id)
-            .single()
+            .maybeSingle() // Use maybeSingle instead of single to handle no results
 
+          console.log('Like check result:', { likeData, likeError })
           setIsLiked(!!likeData)
         }
 

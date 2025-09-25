@@ -1,14 +1,28 @@
 import { createClient as createSupabaseClient } from '@supabase/supabase-js'
 
+// Singleton client instance to prevent multiple instances
+let supabaseInstance: ReturnType<typeof createSupabaseClient> | null = null
+
 // Client-side Supabase client (for use in client components)
 export const createClient = () => {
-  // Hardcode for testing - this will help us identify if the env vars are the issue
+  // Return existing instance if available
+  if (supabaseInstance) {
+    return supabaseInstance as ReturnType<typeof createSupabaseClient<Database>>
+  }
+
+  // Create new instance only if needed
   const supabaseUrl = 'https://zgnxoygcmxwwrctrdwhd.supabase.co'
   const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpnbnhveWdjbXh3d3JjdHJkd2hkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg2MzM4OTIsImV4cCI6MjA3NDIwOTg5Mn0.Dj8nif252wQ0xhWyESFK3RYzHVwxlHhkeLwVwMdafnA'
 
   try {
-    // Most minimal client possible - no extra options
-    return createSupabaseClient<Database>(supabaseUrl, supabaseAnonKey)
+    supabaseInstance = createSupabaseClient<Database>(supabaseUrl, supabaseAnonKey, {
+      auth: {
+        autoRefreshToken: true,
+        persistSession: true,
+        detectSessionInUrl: false, // Prevent URL session detection issues
+      },
+    })
+    return supabaseInstance
   } catch (error) {
     console.error('Error creating Supabase client:', error)
     throw error
