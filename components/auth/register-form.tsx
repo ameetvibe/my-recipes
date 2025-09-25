@@ -54,14 +54,19 @@ export function RegisterForm({ onSuccess, onSwitchToLogin }: RegisterFormProps) 
 
     try {
       const supabase = createClient()
-      
+
+      // Validate form data before sending
+      if (!formData.email || !formData.password) {
+        throw new Error('Email and password are required')
+      }
+
       const { data, error } = await supabase.auth.signUp({
-        email: formData.email,
+        email: formData.email.trim(),
         password: formData.password,
         options: {
           data: {
-            full_name: formData.fullName,
-            username: formData.username,
+            full_name: formData.fullName?.trim() || '',
+            username: formData.username?.trim() || '',
           }
         }
       })

@@ -1,4 +1,4 @@
-import { createBrowserClient } from '@supabase/ssr'
+import { createClient as createSupabaseClient } from '@supabase/supabase-js'
 
 // Client-side Supabase client (for use in client components)
 export const createClient = () => {
@@ -9,7 +9,17 @@ export const createClient = () => {
     throw new Error('Missing Supabase environment variables')
   }
 
-  return createBrowserClient<Database>(supabaseUrl, supabaseAnonKey)
+  // Clean the values to ensure no invalid characters
+  const cleanUrl = supabaseUrl.trim()
+  const cleanKey = supabaseAnonKey.trim()
+
+  return createSupabaseClient<Database>(cleanUrl, cleanKey, {
+    auth: {
+      autoRefreshToken: true,
+      persistSession: true,
+      detectSessionInUrl: true,
+    },
+  })
 }
 
 // Database types (will be generated after running the schema)

@@ -30,10 +30,15 @@ export function LoginForm({ onSuccess, onSwitchToRegister }: LoginFormProps) {
 
     try {
       const supabase = createClient()
-      
+
+      // Validate form data before sending
+      if (!email || !password) {
+        throw new Error('Email and password are required')
+      }
+
       const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
+        email: email.trim(),
+        password: password,
       })
 
       if (error) {
