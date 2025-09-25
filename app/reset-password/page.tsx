@@ -110,7 +110,7 @@ function ResetPasswordForm() {
             <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
             <CardTitle className="text-2xl font-bold">Password Updated!</CardTitle>
             <CardDescription>
-              Your password has been successfully updated. You're being redirected...
+              Your password has been successfully updated. You&apos;re being redirected...
             </CardDescription>
           </CardHeader>
           <CardContent>

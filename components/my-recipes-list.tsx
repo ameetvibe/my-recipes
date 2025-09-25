@@ -187,7 +187,7 @@ export function MyRecipesList({ userId }: MyRecipesListProps) {
         <ChefHat className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
         <h3 className="text-xl font-semibold mb-2">No Recipes Yet</h3>
         <p className="text-muted-foreground mb-4">
-          You haven't shared any recipes yet. Start sharing your culinary creations!
+          You haven&apos;t shared any recipes yet. Start sharing your culinary creations!
         </p>
         <Button asChild>
           <Link href="/share">

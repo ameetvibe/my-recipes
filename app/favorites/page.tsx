@@ -26,7 +26,7 @@ export default async function FavoritesPage() {
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">My Favorites</h1>
           <p className="text-muted-foreground">
-            Recipes you've saved for later
+            Recipes you&apos;ve saved for later
           </p>
         </div>
         <FavoriteRecipes userId={session.user.id} />
