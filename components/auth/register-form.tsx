@@ -53,12 +53,16 @@ export function RegisterForm({ onSuccess, onSwitchToLogin }: RegisterFormProps) 
     }
 
     try {
+      console.log('Creating Supabase client...')
       const supabase = createClient()
+      console.log('Supabase client created successfully')
 
       // Validate form data before sending
       if (!formData.email || !formData.password) {
         throw new Error('Email and password are required')
       }
+
+      console.log('Attempting to sign up user with email:', formData.email.trim())
 
       const { data, error } = await supabase.auth.signUp({
         email: formData.email.trim(),
@@ -71,6 +75,8 @@ export function RegisterForm({ onSuccess, onSwitchToLogin }: RegisterFormProps) 
         }
       })
 
+      console.log('Sign up response:', { data, error })
+
       if (error) {
         throw error
       }
@@ -80,6 +86,7 @@ export function RegisterForm({ onSuccess, onSwitchToLogin }: RegisterFormProps) 
         router.refresh()
       }
     } catch (error) {
+      console.error('Registration error:', error)
       setError(error instanceof Error ? error.message : "An error occurred")
     } finally {
       setIsLoading(false)

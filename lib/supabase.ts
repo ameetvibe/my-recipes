@@ -2,24 +2,17 @@ import { createClient as createSupabaseClient } from '@supabase/supabase-js'
 
 // Client-side Supabase client (for use in client components)
 export const createClient = () => {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  // Hardcode for testing - this will help us identify if the env vars are the issue
+  const supabaseUrl = 'https://zgnxoygcmxwwrctrdwhd.supabase.co'
+  const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpnbnhveWdjbXh3d3JjdHJkd2hkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg2MzM4OTIsImV4cCI6MjA3NDIwOTg5Mn0.Dj8nif252wQ0xhWyESFK3RYzHVwxlHhkeLwVwMdafnA'
 
-  if (!supabaseUrl || !supabaseAnonKey) {
-    throw new Error('Missing Supabase environment variables')
+  try {
+    // Most minimal client possible - no extra options
+    return createSupabaseClient<Database>(supabaseUrl, supabaseAnonKey)
+  } catch (error) {
+    console.error('Error creating Supabase client:', error)
+    throw error
   }
-
-  // Clean the values to ensure no invalid characters
-  const cleanUrl = supabaseUrl.trim()
-  const cleanKey = supabaseAnonKey.trim()
-
-  return createSupabaseClient<Database>(cleanUrl, cleanKey, {
-    auth: {
-      autoRefreshToken: true,
-      persistSession: true,
-      detectSessionInUrl: true,
-    },
-  })
 }
 
 // Database types (will be generated after running the schema)
