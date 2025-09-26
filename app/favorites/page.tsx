@@ -1,45 +1,65 @@
-import { redirect } from 'next/navigation'
-import { createServerSupabaseClient } from '@/lib/supabase-server'
-import { FavoriteRecipes } from '@/components/favorite-recipes'
+"use client"
 
-export const metadata = {
-  title: 'My Favorites | RecipeVibe',
-  description: 'View and manage your favorite recipes on RecipeVibe.',
-}
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
+import { createClient } from "@/lib/supabase"
+import { FavoriteRecipes } from "@/components/favorite-recipes"
+import { Loader2 } from "lucide-react"
 
-export default async function FavoritesPage() {
-  try {
-    const supabase = await createServerSupabaseClient()
+export default function FavoritesPage() {
+  const [user, setUser] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
+  const router = useRouter()
 
-    const {
-      data: { session },
-      error
-    } = await supabase.auth.getSession()
+  useEffect(() => {
+    async function getUser() {
+      try {
+        const supabase = createClient()
+        const { data: { user }, error } = await supabase.auth.getUser()
 
-    if (error) {
-      console.error('Auth error in favorites page:', error)
-      redirect('/')
+        console.log('Favorites - User check:', { user, error })
+
+        if (error || !user) {
+          console.log('No user found, redirecting to home')
+          router.push('/')
+          return
+        }
+
+        setUser(user)
+      } catch (error) {
+        console.error('Auth error:', error)
+        router.push('/')
+      } finally {
+        setLoading(false)
+      }
     }
 
-    if (!session) {
-      redirect('/')
-    }
+    getUser()
+  }, [router])
 
+  if (loading) {
     return (
-      <div className="min-h-screen py-8">
-        <div className="container mx-auto px-4">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold mb-2">My Favorites</h1>
-            <p className="text-muted-foreground">
-              Recipes you&apos;ve saved for later
-            </p>
-          </div>
-          <FavoriteRecipes userId={session.user.id} />
-        </div>
+      <div className="min-h-screen py-8 flex justify-center items-center">
+        <Loader2 className="h-8 w-8 animate-spin" />
       </div>
     )
-  } catch (error) {
-    console.error('Favorites page error:', error)
-    redirect('/')
   }
+
+  if (!user) {
+    return null
+  }
+
+  return (
+    <div className="min-h-screen py-8">
+      <div className="container mx-auto px-4">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold mb-2">My Favorites</h1>
+          <p className="text-muted-foreground">
+            Recipes you&apos;ve saved for later
+          </p>
+        </div>
+        <FavoriteRecipes userId={user.id} />
+      </div>
+    </div>
+  )
 }

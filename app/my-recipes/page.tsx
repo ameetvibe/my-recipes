@@ -1,42 +1,65 @@
-import { redirect } from "next/navigation"
-import { createServerSupabaseClient } from "@/lib/supabase-server"
+"use client"
+
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
+import { createClient } from "@/lib/supabase"
 import { MyRecipesList } from "@/components/my-recipes-list"
+import { Loader2 } from "lucide-react"
 
-export default async function MyRecipesPage() {
-  try {
-    const supabase = await createServerSupabaseClient()
+export default function MyRecipesPage() {
+  const [user, setUser] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
+  const router = useRouter()
 
-    // Get current user
-    const { data: { user }, error } = await supabase.auth.getUser()
+  useEffect(() => {
+    async function getUser() {
+      try {
+        const supabase = createClient()
+        const { data: { user }, error } = await supabase.auth.getUser()
 
-    if (error) {
-      console.error('Auth error in my-recipes page:', error)
-      redirect('/')
+        console.log('My Recipes - User check:', { user, error })
+
+        if (error || !user) {
+          console.log('No user found, redirecting to home')
+          router.push('/')
+          return
+        }
+
+        setUser(user)
+      } catch (error) {
+        console.error('Auth error:', error)
+        router.push('/')
+      } finally {
+        setLoading(false)
+      }
     }
 
-    if (!user) {
-      redirect('/')
-    }
+    getUser()
+  }, [router])
 
+  if (loading) {
     return (
-      <div className="container mx-auto py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">My Recipes</h1>
-          <p className="text-muted-foreground">
-            Manage and view all your shared recipes
-          </p>
-        </div>
-
-        <MyRecipesList userId={user.id} />
+      <div className="container mx-auto py-8 flex justify-center">
+        <Loader2 className="h-8 w-8 animate-spin" />
       </div>
     )
-  } catch (error) {
-    console.error('My recipes page error:', error)
-    redirect('/')
   }
+
+  if (!user) {
+    return null
+  }
+
+  return (
+    <div className="container mx-auto py-8">
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold mb-2">My Recipes</h1>
+        <p className="text-muted-foreground">
+          Manage and view all your shared recipes
+        </p>
+      </div>
+
+      <MyRecipesList userId={user.id} />
+    </div>
+  )
 }
 
-export const metadata = {
-  title: "My Recipes - RecipeVibe",
-  description: "Manage and view all your shared recipes",
-}
