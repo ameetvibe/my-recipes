@@ -50,15 +50,25 @@ export default function MyRecipesPage() {
   }
 
   return (
-    <div className="container mx-auto py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">My Recipes</h1>
-        <p className="text-muted-foreground">
-          Manage and view all your shared recipes
-        </p>
+    <div className="min-h-screen bg-gradient-to-br from-rose-50 via-pink-50 to-orange-50">
+      {/* Header Section with Pastel Background */}
+      <div className="bg-gradient-to-r from-rose-100 via-pink-100 to-peach-100 border-b border-rose-200/50">
+        <div className="container mx-auto py-12 px-4">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold mb-3 bg-gradient-to-r from-rose-600 via-pink-600 to-orange-600 bg-clip-text text-transparent">
+              My Recipes
+            </h1>
+            <p className="text-rose-700/80 text-lg max-w-2xl mx-auto">
+              Manage and view all your shared recipes
+            </p>
+          </div>
+        </div>
       </div>
 
-      <MyRecipesList userId={user.id} />
+      {/* Content Section */}
+      <div className="container mx-auto py-8 px-4">
+        <MyRecipesList userId={user.id} />
+      </div>
     </div>
   )
 }

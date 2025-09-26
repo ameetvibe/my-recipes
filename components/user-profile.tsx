@@ -274,11 +274,20 @@ export function UserProfile({ userId, isOwnProfile = false }: UserProfileProps) 
                 
                 {isOwnProfile && (
                   <div className="flex gap-2">
-                    <Button variant="outline" size="sm" onClick={() => setIsEditing(true)}>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setIsEditing(true)}
+                      className="border-2 border-blue-200 hover:border-blue-300 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 text-blue-700 hover:text-blue-800 transition-all duration-300 hover:scale-105"
+                    >
                       <Edit3 className="h-4 w-4 mr-2" />
                       Edit Profile
                     </Button>
-                    <Button variant="outline" size="sm">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="border-2 border-purple-200 hover:border-purple-300 hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 text-purple-700 hover:text-purple-800 transition-all duration-300 hover:scale-105"
+                    >
                       <Settings className="h-4 w-4 mr-2" />
                       Settings
                     </Button>

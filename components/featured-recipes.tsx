@@ -91,15 +91,21 @@ export function FeaturedRecipes() {
   }, [])
 
   return (
-    <section className="py-16 bg-background">
-      <div className="container mx-auto px-4">
+    <section className="py-16 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 relative overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute top-0 left-1/4 w-64 h-64 bg-gradient-to-br from-blue-300 to-indigo-300 rounded-full blur-3xl opacity-10"></div>
+      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-gradient-to-br from-purple-300 to-pink-300 rounded-full blur-3xl opacity-10"></div>
+
+      <div className="container mx-auto px-4 relative z-10">
         {/* Section Header */}
         <div className="flex items-center justify-between mb-12">
           <div className="flex items-center gap-3">
-            <TrendingUp className="h-6 w-6 text-primary" />
-            <h2 className="text-3xl font-bold">Featured Recipes</h2>
+            <div className="p-2 bg-gradient-to-br from-indigo-400 to-purple-500 rounded-lg shadow-lg">
+              <TrendingUp className="h-6 w-6 text-white" />
+            </div>
+            <h2 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Featured Recipes</h2>
           </div>
-          <Button variant="outline" className="group">
+          <Button variant="outline" className="group border-2 border-indigo-200 hover:border-indigo-300 hover:bg-indigo-50 transition-all duration-300">
             View All Recipes
             <ArrowRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
           </Button>
@@ -171,7 +177,7 @@ export function FeaturedRecipes() {
         {/* Load More Button */}
         {!isLoading && !error && recipes.length > 0 && (
           <div className="text-center mt-12">
-            <Button size="lg" variant="outline">
+            <Button size="lg" className="bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 px-8">
               Load More Recipes
             </Button>
           </div>

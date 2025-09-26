@@ -50,14 +50,23 @@ export default function FavoritesPage() {
   }
 
   return (
-    <div className="min-h-screen py-8">
-      <div className="container mx-auto px-4">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">My Favorites</h1>
-          <p className="text-muted-foreground">
-            Recipes you&apos;ve saved for later
-          </p>
+    <div className="min-h-screen bg-gradient-to-br from-red-50 via-rose-50 to-pink-50">
+      {/* Header Section with Pastel Background */}
+      <div className="bg-gradient-to-r from-red-100 via-rose-100 to-pink-100 border-b border-red-200/50">
+        <div className="container mx-auto py-12 px-4">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold mb-3 bg-gradient-to-r from-red-600 via-rose-600 to-pink-600 bg-clip-text text-transparent">
+              My Favorites
+            </h1>
+            <p className="text-red-700/80 text-lg max-w-2xl mx-auto">
+              Recipes you've saved for later
+            </p>
+          </div>
         </div>
+      </div>
+
+      {/* Content Section */}
+      <div className="container mx-auto py-8 px-4">
         <FavoriteRecipes userId={user.id} />
       </div>
     </div>

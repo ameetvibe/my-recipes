@@ -65,14 +65,23 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="min-h-screen py-8">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">Settings</h1>
-          <p className="text-muted-foreground">
-            Manage your account settings and preferences
-          </p>
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-indigo-50 to-blue-50">
+      {/* Header Section with Pastel Background */}
+      <div className="bg-gradient-to-r from-purple-100 via-indigo-100 to-blue-100 border-b border-purple-200/50">
+        <div className="container mx-auto py-12 px-4">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold mb-3 bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 bg-clip-text text-transparent">
+              Settings
+            </h1>
+            <p className="text-purple-700/80 text-lg max-w-2xl mx-auto">
+              Manage your account settings and preferences
+            </p>
+          </div>
         </div>
+      </div>
+
+      {/* Content Section */}
+      <div className="container mx-auto py-8 px-4 max-w-4xl">
         <UserSettings user={user} userData={userData} />
       </div>
     </div>

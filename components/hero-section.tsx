@@ -35,9 +35,12 @@ export function HeroSection() {
     }
   }
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-orange-50 via-red-50 to-pink-50 dark:from-orange-950/20 dark:via-red-950/20 dark:to-pink-950/20">
+    <section className="relative overflow-hidden bg-gradient-to-br from-orange-100 via-red-100 to-pink-100 dark:from-orange-950/40 dark:via-red-950/40 dark:to-pink-950/40">
       {/* Background Pattern */}
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23f97316%22%20fill-opacity%3D%220.05%22%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%2230%22%20r%3D%222%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-40" />
+      <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23f97316%22%20fill-opacity%3D%220.1%22%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%2230%22%20r%3D%222%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-60" />
+      {/* Additional decorative elements */}
+      <div className="absolute top-10 right-10 w-32 h-32 bg-gradient-to-br from-yellow-300 to-orange-300 rounded-full blur-3xl opacity-20"></div>
+      <div className="absolute bottom-20 left-10 w-40 h-40 bg-gradient-to-br from-pink-300 to-red-300 rounded-full blur-3xl opacity-20"></div>
       
       <div className="container mx-auto px-4 py-16 md:py-24">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -46,10 +49,10 @@ export function HeroSection() {
             <div className="space-y-4">
               <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
                 Discover Amazing
-                <span className="text-primary block">Recipes</span>
+                <span className="bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 bg-clip-text text-transparent block">Recipes</span>
               </h1>
-              <p className="text-lg text-muted-foreground max-w-lg">
-                Join thousands of food lovers sharing their favorite recipes. 
+              <p className="text-lg text-gray-700 dark:text-gray-300 max-w-lg">
+                Join thousands of food lovers sharing their favorite recipes.
                 Find inspiration, share your creations, and connect with fellow cooking enthusiasts.
               </p>
             </div>
@@ -72,7 +75,7 @@ export function HeroSection() {
                 />
               </div>
               <div
-                className="bg-orange-500 text-white hover:bg-orange-600 h-12 px-6 rounded-md font-medium transition-colors cursor-pointer active:scale-95 flex items-center justify-center relative z-20 border-2 border-orange-600"
+                className="bg-gradient-to-r from-orange-500 to-red-500 text-white hover:from-orange-600 hover:to-red-600 h-12 px-6 rounded-md font-medium transition-all duration-300 cursor-pointer active:scale-95 flex items-center justify-center relative z-20 border-2 border-orange-600 shadow-lg hover:shadow-xl"
                 onClick={(e) => {
                   console.log('DIV CLICKED!')
                   handleButtonClick(e)
@@ -120,26 +123,26 @@ export function HeroSection() {
             </div>
             
             {/* Floating Recipe Cards */}
-            <div className="absolute -top-4 -left-4 bg-white dark:bg-card rounded-lg p-4 shadow-lg border">
+            <div className="absolute -top-4 -left-4 bg-white dark:bg-card rounded-lg p-4 shadow-xl border-2 border-orange-200 backdrop-blur-sm">
               <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-full bg-orange-100 dark:bg-orange-900 flex items-center justify-center">
-                  <ChefHat className="h-5 w-5 text-orange-600" />
+                <div className="h-10 w-10 rounded-full bg-gradient-to-br from-orange-400 to-red-400 flex items-center justify-center shadow-md">
+                  <ChefHat className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <p className="font-semibold text-sm">Italian Pasta</p>
-                  <p className="text-xs text-muted-foreground">by Maria Rossi</p>
+                  <p className="font-semibold text-sm text-gray-800">Italian Pasta</p>
+                  <p className="text-xs text-orange-600">by Maria Rossi</p>
                 </div>
               </div>
             </div>
-            
-            <div className="absolute -bottom-4 -right-4 bg-white dark:bg-card rounded-lg p-4 shadow-lg border">
+
+            <div className="absolute -bottom-4 -right-4 bg-white dark:bg-card rounded-lg p-4 shadow-xl border-2 border-green-200 backdrop-blur-sm">
               <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center">
-                  <Star className="h-5 w-5 text-green-600 fill-green-600" />
+                <div className="h-10 w-10 rounded-full bg-gradient-to-br from-green-400 to-emerald-400 flex items-center justify-center shadow-md">
+                  <Star className="h-5 w-5 text-white fill-white" />
                 </div>
                 <div>
-                  <p className="font-semibold text-sm">4.8 Rating</p>
-                  <p className="text-xs text-muted-foreground">120 reviews</p>
+                  <p className="font-semibold text-sm text-gray-800">4.8 Rating</p>
+                  <p className="text-xs text-green-600">120 reviews</p>
                 </div>
               </div>
             </div>

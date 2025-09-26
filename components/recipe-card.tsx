@@ -136,7 +136,7 @@ export function RecipeCard({
   }
   return (
     <Link href={`/recipe/${id}`}>
-      <Card className="group overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer">
+      <Card className="group overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 cursor-pointer border-2 hover:border-gradient-to-r hover:from-orange-200 hover:to-pink-200 bg-white/80 backdrop-blur-sm">
         <CardHeader className="p-0">
           <div className="relative h-48 w-full overflow-hidden">
             <Image
@@ -145,10 +145,16 @@ export function RecipeCard({
               fill
               className="object-cover transition-transform duration-300 group-hover:scale-105"
             />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="absolute top-3 right-3 flex gap-2">
               <Badge
-                variant={difficulty === "easy" ? "default" : difficulty === "medium" ? "secondary" : "destructive"}
-                className="bg-white/90 text-black hover:bg-white/90"
+                className={`${
+                  difficulty === "easy"
+                    ? "bg-gradient-to-r from-green-400 to-emerald-400 text-white shadow-md"
+                    : difficulty === "medium"
+                    ? "bg-gradient-to-r from-yellow-400 to-orange-400 text-white shadow-md"
+                    : "bg-gradient-to-r from-red-400 to-pink-400 text-white shadow-md"
+                } font-semibold`}
               >
                 {difficulty}
               </Badge>
@@ -156,7 +162,7 @@ export function RecipeCard({
                 <Button
                   size="sm"
                   variant="ghost"
-                  className={`h-8 w-8 p-0 rounded-full bg-white/90 hover:bg-white/90 ${isFavorited ? 'text-red-500 hover:text-red-600' : 'text-gray-600 hover:text-red-500'}`}
+                  className={`h-8 w-8 p-0 rounded-full bg-white/90 backdrop-blur-sm hover:bg-white shadow-md ${isFavorited ? 'text-red-500 hover:text-red-600' : 'text-gray-600 hover:text-red-500'} transition-all duration-300 hover:scale-110`}
                   onClick={toggleFavorite}
                   disabled={isLoading}
                 >
@@ -169,31 +175,31 @@ export function RecipeCard({
         
         <CardContent className="p-4">
           <div className="space-y-2">
-            <h3 className="font-semibold text-lg line-clamp-1 group-hover:text-primary transition-colors">
+            <h3 className="font-semibold text-lg line-clamp-1 group-hover:bg-gradient-to-r group-hover:from-orange-500 group-hover:to-pink-500 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-300">
               {title}
             </h3>
-            <p className="text-sm text-muted-foreground line-clamp-2">
+            <p className="text-sm text-gray-600 line-clamp-2">
               {description}
             </p>
-            
+
             {/* Recipe metadata */}
-            <div className="flex items-center gap-4 text-xs text-muted-foreground">
-              <div className="flex items-center gap-1">
+            <div className="flex items-center gap-4 text-xs">
+              <div className="flex items-center gap-1 text-blue-600">
                 <Clock className="h-3 w-3" />
-                <span>{prepTime + cookTime}m</span>
+                <span className="font-medium">{prepTime + cookTime}m</span>
               </div>
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-1 text-green-600">
                 <Users className="h-3 w-3" />
-                <span>{servings} servings</span>
+                <span className="font-medium">{servings} servings</span>
               </div>
-              <div className="flex items-center gap-1">
-                <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                <span>{rating.toFixed(1)}</span>
+              <div className="flex items-center gap-1 text-yellow-600">
+                <Star className="h-3 w-3 fill-current" />
+                <span className="font-medium">{rating.toFixed(1)}</span>
               </div>
               {currentLikeCount > 0 && (
-                <div className="flex items-center gap-1">
-                  <Heart className="h-3 w-3 fill-red-400 text-red-400" />
-                  <span>{currentLikeCount}</span>
+                <div className="flex items-center gap-1 text-pink-600">
+                  <Heart className="h-3 w-3 fill-current" />
+                  <span className="font-medium">{currentLikeCount}</span>
                 </div>
               )}
             </div>
@@ -201,13 +207,22 @@ export function RecipeCard({
             {/* Dietary tags */}
             {dietaryTags.length > 0 && (
               <div className="flex flex-wrap gap-1">
-                {dietaryTags.slice(0, 3).map((tag) => (
-                  <Badge key={tag} variant="outline" className="text-xs">
+                {dietaryTags.slice(0, 3).map((tag, index) => (
+                  <Badge
+                    key={tag}
+                    className={`text-xs font-medium ${
+                      index % 3 === 0
+                        ? "bg-gradient-to-r from-purple-100 to-blue-100 text-purple-700 border-purple-200"
+                        : index % 3 === 1
+                        ? "bg-gradient-to-r from-green-100 to-emerald-100 text-green-700 border-green-200"
+                        : "bg-gradient-to-r from-orange-100 to-red-100 text-orange-700 border-orange-200"
+                    }`}
+                  >
                     {tag}
                   </Badge>
                 ))}
                 {dietaryTags.length > 3 && (
-                  <Badge variant="outline" className="text-xs">
+                  <Badge className="text-xs bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 border-gray-200">
                     +{dietaryTags.length - 3}
                   </Badge>
                 )}
@@ -219,16 +234,16 @@ export function RecipeCard({
         <CardFooter className="p-4 pt-0">
           <div className="flex items-center justify-between w-full">
             <div className="flex items-center gap-2">
-              <Avatar className="h-6 w-6">
+              <Avatar className="h-6 w-6 ring-2 ring-orange-200 ring-offset-1">
                 <AvatarImage src={author.avatar} alt={author.name} />
-                <AvatarFallback className="text-xs">
+                <AvatarFallback className="text-xs bg-gradient-to-br from-orange-400 to-pink-400 text-white font-semibold">
                   {author.name.split(' ').map(n => n[0]).join('').toUpperCase()}
                 </AvatarFallback>
               </Avatar>
-              <span className="text-sm text-muted-foreground">{author.name}</span>
+              <span className="text-sm text-gray-700 font-medium">{author.name}</span>
             </div>
             {cuisine && (
-              <Badge variant="secondary" className="text-xs">
+              <Badge className="text-xs bg-gradient-to-r from-teal-100 to-cyan-100 text-teal-700 border-teal-200 font-medium">
                 {cuisine}
               </Badge>
             )}

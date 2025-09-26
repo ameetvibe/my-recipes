@@ -107,10 +107,10 @@ export function ImageUpload({ onImagesChange, maxImages = 5, disabled = false, i
       
       {/* Upload Area */}
       <div
-        className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors ${
+        className={`border-2 border-dashed rounded-lg p-6 text-center transition-all duration-300 ${
           disabled || uploading
-            ? 'border-muted bg-muted/50 cursor-not-allowed'
-            : 'border-primary/50 hover:border-primary cursor-pointer'
+            ? 'border-gray-300 bg-gray-50 cursor-not-allowed'
+            : 'border-orange-300 hover:border-orange-500 cursor-pointer hover:bg-gradient-to-br hover:from-orange-50 hover:to-pink-50 hover:scale-[1.02] hover:shadow-lg'
         }`}
         onDrop={handleDrop}
         onDragOver={handleDragOver}
@@ -128,17 +128,19 @@ export function ImageUpload({ onImagesChange, maxImages = 5, disabled = false, i
         
         {uploading ? (
           <div className="flex flex-col items-center gap-2">
-            <Loader2 className="h-8 w-8 animate-spin text-primary" />
-            <p className="text-sm text-muted-foreground">Uploading images...</p>
+            <Loader2 className="h-8 w-8 animate-spin text-orange-500" />
+            <p className="text-sm text-orange-600 font-medium">Uploading images...</p>
           </div>
         ) : (
           <div className="flex flex-col items-center gap-2">
-            <Upload className="h-8 w-8 text-muted-foreground" />
+            <div className="p-3 bg-gradient-to-br from-orange-100 to-pink-100 rounded-full">
+              <Upload className="h-8 w-8 text-orange-500" />
+            </div>
             <div>
-              <p className="text-sm font-medium">
+              <p className="text-sm font-medium text-gray-700">
                 Click to upload or drag and drop
               </p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-gray-500">
                 PNG, JPG, GIF up to 5MB each (max {maxImages} images)
               </p>
             </div>
@@ -161,7 +163,7 @@ export function ImageUpload({ onImagesChange, maxImages = 5, disabled = false, i
                 <button
                   type="button"
                   onClick={() => removeImage(index)}
-                  className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity"
+                  className="absolute top-2 right-2 bg-gradient-to-br from-red-400 to-pink-500 text-white rounded-full p-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 hover:scale-110 shadow-lg"
                   disabled={disabled}
                 >
                   <X className="h-3 w-3" />
@@ -179,7 +181,7 @@ export function ImageUpload({ onImagesChange, maxImages = 5, disabled = false, i
           variant="outline"
           onClick={() => fileInputRef.current?.click()}
           disabled={disabled}
-          className="w-full"
+          className="w-full bg-gradient-to-r from-orange-50 to-pink-50 border-2 border-orange-200 hover:border-orange-300 hover:from-orange-100 hover:to-pink-100 text-orange-700 font-semibold transition-all duration-300 hover:scale-[1.02] hover:shadow-md"
         >
           <ImageIcon className="h-4 w-4 mr-2" />
           Add More Images ({images.length}/{maxImages})

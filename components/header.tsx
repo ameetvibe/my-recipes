@@ -54,26 +54,28 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 shadow-lg">
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 font-bold text-xl">
-            <ChefHat className="h-6 w-6 text-primary" />
+          <Link href="/" className="flex items-center gap-2 font-bold text-xl text-white hover:text-yellow-200 transition-colors">
+            <div className="p-2 bg-white/20 rounded-lg backdrop-blur">
+              <ChefHat className="h-6 w-6 text-white" />
+            </div>
             RecipeVibe
           </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8 ml-8">
-            <Link 
-              href="/search" 
-              className="text-sm font-medium transition-colors hover:text-primary"
+            <Link
+              href="/search"
+              className="text-sm font-medium text-white/90 transition-colors hover:text-yellow-200"
             >
               Search Recipes
             </Link>
-            <Link 
-              href="/categories" 
-              className="text-sm font-medium transition-colors hover:text-primary"
+            <Link
+              href="/categories"
+              className="text-sm font-medium text-white/90 transition-colors hover:text-yellow-200"
             >
               Categories
             </Link>
@@ -82,10 +84,10 @@ export function Header() {
           {/* Search Bar */}
           <div className="hidden md:flex items-center gap-2 flex-1 max-w-md mx-6">
             <form onSubmit={handleSearch} className="relative w-full">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input 
-                placeholder="Search recipes, ingredients..." 
-                className="pl-10"
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
+              <Input
+                placeholder="Search recipes, ingredients..."
+                className="pl-10 bg-white/90 backdrop-blur border-white/20 focus:border-yellow-300 placeholder:text-gray-500"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -95,21 +97,21 @@ export function Header() {
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center gap-3">
             {isLoading ? (
-              <div className="h-8 w-8 animate-pulse bg-muted rounded-full" />
+              <div className="h-8 w-8 animate-pulse bg-white/20 rounded-full" />
             ) : user ? (
               <>
-                <Button variant="ghost" size="sm" asChild>
+                <Button variant="ghost" size="sm" className="text-white hover:bg-white/20 hover:text-yellow-200" asChild>
                   <Link href="/my-recipes">
                     <ChefHat className="h-4 w-4" />
                   </Link>
                 </Button>
-                <Button variant="ghost" size="sm" asChild>
+                <Button variant="ghost" size="sm" className="text-white hover:bg-white/20 hover:text-yellow-200" asChild>
                   <Link href="/favorites">
                     <Heart className="h-4 w-4" />
                   </Link>
                 </Button>
                 <UserMenu user={user} />
-                <Button size="sm" asChild>
+                <Button size="sm" className="bg-yellow-400 text-orange-800 hover:bg-yellow-300 font-semibold" asChild>
                   <Link href="/share">
                     <Plus className="h-4 w-4 mr-2" />
                     Add Recipe
@@ -118,10 +120,10 @@ export function Header() {
               </>
             ) : (
               <>
-                <Button variant="ghost" size="sm" onClick={() => setIsAuthModalOpen(true)}>
+                <Button variant="ghost" size="sm" className="text-white hover:bg-white/20 hover:text-yellow-200" onClick={() => setIsAuthModalOpen(true)}>
                   <User className="h-4 w-4" />
                 </Button>
-                <Button size="sm" onClick={() => setIsAuthModalOpen(true)}>
+                <Button size="sm" className="bg-yellow-400 text-orange-800 hover:bg-yellow-300 font-semibold" onClick={() => setIsAuthModalOpen(true)}>
                   <Plus className="h-4 w-4 mr-2" />
                   Add Recipe
                 </Button>
@@ -133,7 +135,7 @@ export function Header() {
           <Button
             variant="ghost"
             size="sm"
-            className="md:hidden"
+            className="md:hidden text-white hover:bg-white/20"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -142,21 +144,21 @@ export function Header() {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden border-t py-4 space-y-4">
+          <div className="md:hidden border-t border-white/20 py-4 space-y-4 bg-black/10 backdrop-blur">
             {/* Mobile Search */}
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input 
-                placeholder="Search recipes..." 
-                className="pl-10"
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
+              <Input
+                placeholder="Search recipes..."
+                className="pl-10 bg-white/90 backdrop-blur border-white/20 focus:border-yellow-300 placeholder:text-gray-500"
               />
             </div>
 
             {/* Mobile Navigation Links */}
             <nav className="space-y-3">
-              <Link 
-                href="/categories" 
-                className="block py-2 text-sm font-medium transition-colors hover:text-primary"
+              <Link
+                href="/categories"
+                className="block py-2 text-sm font-medium text-white/90 transition-colors hover:text-yellow-200"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Categories
@@ -164,12 +166,12 @@ export function Header() {
             </nav>
 
             {/* Mobile Actions */}
-            <div className="flex items-center gap-3 pt-4 border-t">
+            <div className="flex items-center gap-3 pt-4 border-t border-white/20">
               {isLoading ? (
-                <div className="h-8 w-8 animate-pulse bg-muted rounded-full flex-1" />
+                <div className="h-8 w-8 animate-pulse bg-white/20 rounded-full flex-1" />
               ) : user ? (
                 <>
-                  <Button variant="ghost" size="sm" className="flex-1" asChild>
+                  <Button variant="ghost" size="sm" className="flex-1 text-white hover:bg-white/20 hover:text-yellow-200" asChild>
                     <Link href="/favorites">
                       <Heart className="h-4 w-4 mr-2" />
                       Favorites
@@ -179,14 +181,14 @@ export function Header() {
                 </>
               ) : (
                 <>
-                  <Button variant="ghost" size="sm" className="flex-1" onClick={() => setIsAuthModalOpen(true)}>
+                  <Button variant="ghost" size="sm" className="flex-1 text-white hover:bg-white/20 hover:text-yellow-200" onClick={() => setIsAuthModalOpen(true)}>
                     <User className="h-4 w-4 mr-2" />
                     Sign In
                   </Button>
                 </>
               )}
             </div>
-            <Button size="sm" className="w-full" asChild>
+            <Button size="sm" className="w-full bg-yellow-400 text-orange-800 hover:bg-yellow-300 font-semibold" asChild>
               <Link href={user ? "/share" : "#"} onClick={user ? undefined : () => setIsAuthModalOpen(true)}>
                 <Plus className="h-4 w-4 mr-2" />
                 Add Recipe
