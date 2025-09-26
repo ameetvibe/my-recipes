@@ -3,12 +3,9 @@ import { cookies } from 'next/headers'
 import type { Database } from './supabase'
 
 export const createServerSupabaseClient = async () => {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-
-  if (!supabaseUrl || !supabaseAnonKey) {
-    throw new Error('Missing Supabase environment variables')
-  }
+  // Use hardcoded values for consistency with client
+  const supabaseUrl = 'https://zgnxoygcmxwwrctrdwhd.supabase.co'
+  const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpnbnhveWdjbXh3d3JjdHJkd2hkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg2MzM4OTIsImV4cCI6MjA3NDIwOTg5Mn0.Dj8nif252wQ0xhWyESFK3RYzHVwxlHhkeLwVwMdafnA'
 
   const cookieStore = await cookies()
 
