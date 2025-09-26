@@ -96,11 +96,15 @@ export function UserProfile({ userId, isOwnProfile = false }: UserProfileProps) 
             created_at
           `)
           .eq('id', userId)
-          .single()
+          .maybeSingle() // Use maybeSingle instead of single
 
         if (profileError) {
           console.error('Profile fetch error:', profileError.message || profileError)
           throw new Error(profileError.message || 'Failed to fetch profile')
+        }
+
+        if (!profileData) {
+          throw new Error('User profile not found')
         }
 
         if (!profileData) {
