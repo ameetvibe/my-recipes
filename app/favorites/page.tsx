@@ -8,27 +8,38 @@ export const metadata = {
 }
 
 export default async function FavoritesPage() {
-  const supabase = await createServerSupabaseClient()
+  try {
+    const supabase = await createServerSupabaseClient()
 
-  const {
-    data: { session },
-  } = await supabase.auth.getSession()
+    const {
+      data: { session },
+      error
+    } = await supabase.auth.getSession()
 
-  if (!session) {
-    redirect('/auth')
-  }
+    if (error) {
+      console.error('Auth error in favorites page:', error)
+      redirect('/')
+    }
 
-  return (
-    <div className="min-h-screen py-8">
-      <div className="container mx-auto px-4">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">My Favorites</h1>
-          <p className="text-muted-foreground">
-            Recipes you&apos;ve saved for later
-          </p>
+    if (!session) {
+      redirect('/')
+    }
+
+    return (
+      <div className="min-h-screen py-8">
+        <div className="container mx-auto px-4">
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold mb-2">My Favorites</h1>
+            <p className="text-muted-foreground">
+              Recipes you&apos;ve saved for later
+            </p>
+          </div>
+          <FavoriteRecipes userId={session.user.id} />
         </div>
-        <FavoriteRecipes userId={session.user.id} />
       </div>
-    </div>
-  )
+    )
+  } catch (error) {
+    console.error('Favorites page error:', error)
+    redirect('/')
+  }
 }

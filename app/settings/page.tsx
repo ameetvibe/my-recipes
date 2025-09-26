@@ -8,36 +8,51 @@ export const metadata = {
 }
 
 export default async function SettingsPage() {
-  const supabase = await createServerSupabaseClient()
+  try {
+    const supabase = await createServerSupabaseClient()
 
-  const {
-    data: { session },
-  } = await supabase.auth.getSession()
+    const {
+      data: { session },
+      error: sessionError
+    } = await supabase.auth.getSession()
 
-  if (!session) {
-    redirect('/auth')
-  }
+    if (sessionError) {
+      console.error('Auth error in settings page:', sessionError)
+      redirect('/')
+    }
 
-  // Fetch user data (only columns that exist)
-  const { data: users } = await supabase
-    .from('users')
-    .select('id, username, full_name, bio, avatar_url, created_at')
-    .eq('id', session.user.id)
-    .limit(1)
+    if (!session) {
+      redirect('/')
+    }
 
-  const userData = users && users.length > 0 ? users[0] : null
+    // Fetch user data (only columns that exist)
+    const { data: users, error: userError } = await supabase
+      .from('users')
+      .select('id, username, full_name, bio, avatar_url, created_at')
+      .eq('id', session.user.id)
+      .limit(1)
 
-  return (
-    <div className="min-h-screen py-8">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">Settings</h1>
-          <p className="text-muted-foreground">
-            Manage your account settings and preferences
-          </p>
+    if (userError) {
+      console.error('User data fetch error:', userError)
+    }
+
+    const userData = users && users.length > 0 ? users[0] : null
+
+    return (
+      <div className="min-h-screen py-8">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold mb-2">Settings</h1>
+            <p className="text-muted-foreground">
+              Manage your account settings and preferences
+            </p>
+          </div>
+          <UserSettings user={session.user} userData={userData} />
         </div>
-        <UserSettings user={session.user} userData={userData} />
       </div>
-    </div>
-  )
+    )
+  } catch (error) {
+    console.error('Settings page error:', error)
+    redirect('/')
+  }
 }

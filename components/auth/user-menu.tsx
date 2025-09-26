@@ -37,11 +37,15 @@ export function UserMenu({ user }: UserMenuProps) {
     async function fetchUsername() {
       try {
         const supabase = createClient()
-        const { data } = await supabase
+        const { data, error } = await supabase
           .from('users')
           .select('username')
           .eq('id', user.id)
-          .single()
+          .maybeSingle()
+
+        if (error) {
+          console.error('Error fetching username:', error)
+        }
         
         if (data?.username) {
           setUsername(data.username)
