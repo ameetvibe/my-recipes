@@ -145,28 +145,8 @@ export function Header() {
         {/* Mobile Menu */}
         {isMenuOpen && (
           <div className="md:hidden border-t border-white/20 py-4 space-y-4 bg-black/10 backdrop-blur">
-            {/* Mobile Search */}
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
-              <Input
-                placeholder="Search recipes..."
-                className="pl-10 bg-white/90 backdrop-blur border-white/20 focus:border-yellow-300 placeholder:text-gray-500"
-              />
-            </div>
-
-            {/* Mobile Navigation Links */}
-            <nav className="space-y-3">
-              <Link
-                href="/categories"
-                className="block py-2 text-sm font-medium text-white/90 transition-colors hover:text-yellow-200"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Categories
-              </Link>
-            </nav>
-
-            {/* Mobile Actions */}
-            <div className="flex items-center gap-3 pt-4 border-t border-white/20">
+            {/* Mobile User Actions - Moved to top */}
+            <div className="flex items-center gap-3 pb-4 border-b border-white/20">
               {isLoading ? (
                 <div className="h-8 w-8 animate-pulse bg-white/20 rounded-full flex-1" />
               ) : user ? (
@@ -188,6 +168,28 @@ export function Header() {
                 </>
               )}
             </div>
+
+            {/* Mobile Search */}
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
+              <Input
+                placeholder="Search recipes..."
+                className="pl-10 bg-white/90 backdrop-blur border-white/20 focus:border-yellow-300 placeholder:text-gray-500"
+              />
+            </div>
+
+            {/* Mobile Navigation Links */}
+            <nav className="space-y-3">
+              <Link
+                href="/categories"
+                className="block py-2 text-sm font-medium text-white/90 transition-colors hover:text-yellow-200"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Categories
+              </Link>
+            </nav>
+
+            {/* Add Recipe Button */}
             <Button size="sm" className="w-full bg-yellow-400 text-orange-800 hover:bg-yellow-300 font-semibold" asChild>
               <Link href={user ? "/share" : "#"} onClick={user ? undefined : () => setIsAuthModalOpen(true)}>
                 <Plus className="h-4 w-4 mr-2" />

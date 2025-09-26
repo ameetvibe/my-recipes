@@ -113,8 +113,8 @@ export function HeroSection() {
           <div className="relative">
             <div className="relative h-96 lg:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
               <Image
-                src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-                alt="Delicious homemade pasta"
+                src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80"
+                alt="Traditional Indian meal with curry, rice, and naan on a beautifully set table"
                 fill
                 className="object-cover"
                 priority
@@ -129,8 +129,8 @@ export function HeroSection() {
                   <ChefHat className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <p className="font-semibold text-sm text-gray-800">Italian Pasta</p>
-                  <p className="text-xs text-orange-600">by Maria Rossi</p>
+                  <p className="font-semibold text-sm text-gray-800">Butter Chicken</p>
+                  <p className="text-xs text-orange-600">by Priya Sharma</p>
                 </div>
               </div>
             </div>
@@ -141,8 +141,8 @@ export function HeroSection() {
                   <Star className="h-5 w-5 text-white fill-white" />
                 </div>
                 <div>
-                  <p className="font-semibold text-sm text-gray-800">4.8 Rating</p>
-                  <p className="text-xs text-green-600">120 reviews</p>
+                  <p className="font-semibold text-sm text-gray-800">4.9 Rating</p>
+                  <p className="text-xs text-green-600">287 reviews</p>
                 </div>
               </div>
             </div>
